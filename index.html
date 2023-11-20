@@ -1,33 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Infinite Scroll Web</title>
+  <!-- เพิ่ม Axios library -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <style>
-    body{
-        background-color: red;
-    }
     #app {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-around;
     }
 
     .card {
-      width: 200px;
+      width: 300px;
       margin: 10px;
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      
     }
   </style>
 </head>
+
 <body>
 
   <div id="app"></div>
+  
+  <script>
+    // ใช้ axios ดึงข้อมูล
+    axios.get('https://api.sampleapis.com/codingresources/codingResources')
+      .then(res => {
+        // แสดงข้อมูลใน console
+        console.log(res.data);
 
-  
-  
+        // แสดงข้อมูลในหน้าเว็บ
+        const appElement = document.getElementById('app');
+
+        res.data.forEach(item => {
+          const cardElement = document.createElement('div');
+          cardElement.className = 'card';
+          // เพิ่มข้อมูลลงใน cardElement ตามที่คุณต้องการ
+          cardElement.innerHTML = `<h4>${item.description}</h4>
+          <h5>levels : ${item.levels}</h5>
+          <p>topics : ${item.topics}</p>
+          <p>URL : ${item.url}</p>
+          <p>type : ${item.types}</p>`;
+          appElement.appendChild(cardElement);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // โหลดข้อมูลเริ่มต้น
+    fetchData();
+
+    // เพิ่ม Infinite Scroll
+    window.addEventListener('scroll', function () {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        fetchData();
+      }
+    });
+  </script>
+
 </body>
+
+
 </html>
