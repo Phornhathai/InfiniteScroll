@@ -3,12 +3,10 @@ import axios from 'axios';
 import SampleData from './components/SampleData';
 import './App.css'
 
-
 const App = () => {
 
   const [sampleData, setSampleData] = useState([])
   
-
   useEffect(() => {
     // ใช้ axios ดึงข้อมูล
     axios.get('https://api.sampleapis.com/codingresources/codingResources')
@@ -27,10 +25,11 @@ const App = () => {
 
   return (
     <div id="app">
-      <h1 className='text-center'>Infinite Scroll</h1>
+    <h1 className='text-center'>Infinite Scroll</h1>
+
       {/* ส่งค่า props sampleData ไปที่ components สำหรับแสดงข้อมูล */}
       <SampleData sampleData={sampleData} />
-    </div>
+  </div>
   );
 };
 
